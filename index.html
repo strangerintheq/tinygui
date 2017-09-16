@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TityGui</title>
+    <link href="tinygui.css" rel="stylesheet"/>
+    <script src="tinygui.js"></script>
+</head>
+<body style="background-color: darkgray">
+    <script>
+        var target = {a: 1, b: "", c: false, d: function() {
+            console.log('a =' + this.a);
+            console.log('b =' + this.b);
+            console.log('c =' + this.c);
+        }};
+        TinyGui(target, 'Tiny Gui', [
+            {name: 'a', min:-5, max: 10, title: 'var a'},
+            {name: 'b', title: 'var b'},
+            {name: 'c', title: 'var c'},
+            {name: 'd', title: 'func d'}
+        ]).appendTo(document.body);
+    </script>
+</body>
+</html>
