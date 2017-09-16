@@ -7,18 +7,21 @@
     <script src="tinygui.js"></script>
 </head>
 <body style="background-color: darkgray">
+    <div id="info" style="float: right; width: 300px">
     <script>
-        var target = {a: 1, b: "", c: false, d: function() {
-            console.log('a =' + this.a);
-            console.log('b =' + this.b);
-            console.log('c =' + this.c);
+        var target = {a: 1, b: "13", c: false, d: function() {
+            info.innerHTML =
+                'a =' + target.a + '<br>' +
+                'b =' + target.b +'<br>' +
+                'c =' + target.c +'<br>';
         }};
         TinyGui(target, 'Tiny Gui', [
-            {name: 'a', min:-5, max: 10, title: 'var a'},
             {name: 'b', title: 'var b'},
+            {name: 'a', min:-5, max: 10, title: 'var a', fixed: 1},
             {name: 'c', title: 'var c'},
             {name: 'd', title: 'func d'}
-        ]).appendTo(document.body);
+        ]);
+
     </script>
 </body>
 </html>
