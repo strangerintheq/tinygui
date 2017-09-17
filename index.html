@@ -2,24 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TityGui</title>
+    <title>Tiny Gui</title>
     <link href="tinygui.css" rel="stylesheet"/>
     <script src="tinygui.js"></script>
 </head>
-<body style="background-color: darkgray">
-    <div id="info" style="float: right; width: 300px">
+<body>
+    <div id="info" style="float: right; width: 50%">
     <script>
-        var target = {a: 1, e:5, b: "13", c: false, d: function() {
-            info.innerHTML = JSON.stringify(target)
-        }};
-        TinyGui(target, 'Tiny Gui', [
-            {name: 'b', title: 'var b'},
-            {name: 'a', min:-5, max: 10, title: 'var a', fixed: 1},
-            {name: 'e', min:-100, max: 10, title: 'var a', fixed: 0},
-            {name: 'c', title: 'var c'},
-            {name: 'd', title: 'func d'}
-        ]);
+        var target = {
+            a: 1, e: 5, b: "hello",
+            c: false, action: print
+        };
 
+        var gui = TinyGui('Tiny Gui');
+        gui.add(target, 'a');
+        gui.add(target, 'e');
+        gui.add(target, 'b');
+        gui.add(target, 'c');
+        gui.add(target, 'action');
+
+        function print() {
+            info.innerHTML = JSON.stringify(target).split(',').join(',<br>');
+        }
     </script>
+
 </body>
 </html>

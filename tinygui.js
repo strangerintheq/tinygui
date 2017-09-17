@@ -3,43 +3,49 @@ var TinyGui = (function() {
         boolean: createCheck, string: createField,
         number: createRange, function: createButton
     };
-    return function (target, title, properties) {
+    return function (title) {
+        document.addEventListener('touchstart', function(e) {e.preventDefault()}, false);
+        document.addEventListener('touchmove', function(e) {e.preventDefault()}, false);
         var form = dom('div', 'tiny-gui').appendTo(document.body);
         form.appendChild(dom('div', 'form-title').text(title));
-        properties.forEach(function(props) {
-            var type = typeof target[props.name];
-            return types[type](props, target, form);
-        });
+        form.add = function (target, name) {
+            var type = typeof target[name];
+            return types[type](name, target, form);
+        };
+        return form;
     };
 
-    function createCheck(props, target, form) {
+    function createCheck(name, target, form) {
         var checkField = dom('div', 'field check').appendTo(form);
         var check = dom('input').appendTo(checkField);
         check.onchange = function () {
-            target[props.name] = check.checked;
+            target[name] = check.checked;
         };
         check.setAttribute('type', 'checkbox');
     }
 
-    function createField(props, target, form) {
+    function createField(name, target, form) {
         var textField = dom('div', 'field text').appendTo(form);
         var text = dom('input').appendTo(textField);
         text.onkeyup = function () {
-            target[props.name] = text.value;
+            target[name] = text.value;
         };
-        text.setAttribute('placeholder', props.title);
-        text.value = target[props.name] || '';
+        text.setAttribute('placeholder', name);
+        text.value = target[name] || '';
     }
 
-    function createRange(props, target, form) {
+    function createRange(name, target, form) {
         var rangeField = dom('div', 'field range').appendTo(form);
         var text = dom('div', 'text').appendTo(rangeField);
         var indicator = dom('div', 'indicator').appendTo(rangeField);
         var knob = dom('div', 'knob').appendTo(rangeField);
+        var props = {
+            min: -1, max: 1, fixed: 0
+        };
         knob.addEventListener('mousedown', start);
         knob.addEventListener('touchstart', start);
         text.style.width = rangeField.offsetWidth + 'px';
-        text.text(props.title + ': ' + (target[props.name]).toFixed(props.fixed || 0));
+        text.text(props.title + ': ' + (target[name]).toFixed(props.fixed));
         var value = (rangeField.offsetWidth - knob.offsetWidth)*(target[props.name]-props.min);
         indicator.style.width = (knob.offsetWidth + value/(props.max - props.min)) + 'px';
         knob.style.left = value/(props.max - props.min) + 'px';
@@ -63,8 +69,8 @@ var TinyGui = (function() {
             knob.style.left = newLeft + 'px';
             indicator.style.width = (knob.offsetWidth + newLeft) + 'px';
             var val = props.min + (props.max - props.min)*newLeft/full;
-            text.text(props.title + ': ' + val.toFixed(props.fixed || 0));
-            target[props.name] = val;
+            text.text(name + ': ' + val.toFixed(props.fixed));
+            target[name] = val;
         }
 
         function up() {
@@ -75,9 +81,9 @@ var TinyGui = (function() {
         }
     }
 
-    function createButton(props, target, form) {
-        var button = dom('div', 'field button').text(props.title).appendTo(form);
-        button.onclick = target[props.name];
+    function createButton(name, target, form) {
+        var button = dom('div', 'field button').text(name).appendTo(form);
+        button.onclick = target[name];
     }
 
     function dom(name, className) {
