@@ -40,13 +40,13 @@ var TinyGui = (function() {
         var indicator = dom('div', 'indicator').appendTo(rangeField);
         var knob = dom('div', 'knob').appendTo(rangeField);
         var props = {
-            min: -1, max: 1, fixed: 0
+            min: -1, max: 1, fixed: 1
         };
         knob.addEventListener('mousedown', start);
         knob.addEventListener('touchstart', start);
         text.style.width = rangeField.offsetWidth + 'px';
         text.text(name + ': ' + (target[name]).toFixed(props.fixed));
-        var value = (rangeField.offsetWidth - knob.offsetWidth)*(target[props.name]-props.min);
+        var value = (rangeField.offsetWidth - knob.offsetWidth)*(target[name]-props.min);
         indicator.style.width = (knob.offsetWidth + value/(props.max - props.min)) + 'px';
         knob.style.left = value/(props.max - props.min) + 'px';
         return rangeField;
