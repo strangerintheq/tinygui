@@ -9,15 +9,13 @@
 <body style="background-color: darkgray">
     <div id="info" style="float: right; width: 300px">
     <script>
-        var target = {a: 1, b: "13", c: false, d: function() {
-            info.innerHTML =
-                'a =' + target.a + '<br>' +
-                'b =' + target.b +'<br>' +
-                'c =' + target.c +'<br>';
+        var target = {a: 1, e:5, b: "13", c: false, d: function() {
+            info.innerHTML =JSON.stringify(target)
         }};
         TinyGui(target, 'Tiny Gui', [
             {name: 'b', title: 'var b'},
             {name: 'a', min:-5, max: 10, title: 'var a', fixed: 1},
+            {name: 'e', min:-100, max: 10, title: 'var a', fixed: 0},
             {name: 'c', title: 'var c'},
             {name: 'd', title: 'func d'}
         ]);

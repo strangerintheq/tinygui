@@ -29,19 +29,20 @@ div.tiny-gui div.field {
 }
 
 div.tiny-gui input {
-    width: 100%;
+    width: calc(100% - 2px);
     border: 0;
     height: 25px;
-    padding: 0;
     margin: 0;
     display: inline-block;
     cursor: pointer;
     background-color: #b1a9aa;
     font-size: 20px;
     font-family: Courier, sans-serif;
+    padding: 0 0 0 3px;
+    line-height: 25px;
 }
 
-div.knob {
+div.indicator, div.knob {
     position: absolute;
     left: 0;
     width: 25px;
@@ -63,6 +64,8 @@ div.range div.text {
 div.field.button {
     transition: 250ms;
     text-align: center;
+    height: 30px !important;
+    line-height: 30px !important;
 }
 
 div.field.button:hover {

@@ -34,12 +34,14 @@ var TinyGui = (function() {
     function createRange(props, target, form) {
         var rangeField = dom('div', 'field range').appendTo(form);
         var text = dom('div', 'text').appendTo(rangeField);
+        var indicator = dom('div', 'indicator').appendTo(rangeField);
         var knob = dom('div', 'knob').appendTo(rangeField);
         knob.addEventListener('mousedown', start);
         knob.addEventListener('touchstart', start);
         text.style.width = rangeField.offsetWidth + 'px';
         text.text(props.title + ': ' + (target[props.name]).toFixed(props.fixed || 0));
         var value = (rangeField.offsetWidth - knob.offsetWidth)*(target[props.name]-props.min);
+        indicator.style.width = (knob.offsetWidth + value/(props.max - props.min)) + 'px';
         knob.style.left = value/(props.max - props.min) + 'px';
         return rangeField;
 
@@ -59,6 +61,7 @@ var TinyGui = (function() {
             var full = rangeField.offsetWidth - knob.offsetWidth;
             newLeft = newLeft > full ? full : newLeft;
             knob.style.left = newLeft + 'px';
+            indicator.style.width = (knob.offsetWidth + newLeft) + 'px';
             var val = props.min + (props.max - props.min)*newLeft/full;
             text.text(props.title + ': ' + val.toFixed(props.fixed || 0));
             target[props.name] = val;
