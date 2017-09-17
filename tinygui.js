@@ -45,7 +45,7 @@ var TinyGui = (function() {
         knob.addEventListener('mousedown', start);
         knob.addEventListener('touchstart', start);
         text.style.width = rangeField.offsetWidth + 'px';
-        text.text(props.title + ': ' + (target[name]).toFixed(props.fixed));
+        text.text(name + ': ' + (target[name]).toFixed(props.fixed));
         var value = (rangeField.offsetWidth - knob.offsetWidth)*(target[props.name]-props.min);
         indicator.style.width = (knob.offsetWidth + value/(props.max - props.min)) + 'px';
         knob.style.left = value/(props.max - props.min) + 'px';
